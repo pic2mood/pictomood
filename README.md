@@ -1,4 +1,4 @@
-# Pictomood ![Size](https://github-size-badge.herokuapp.com/pic2mood/pictomood.svg)
+# Pictomood ![Size](https://github-size-badge.herokuapp.com/pic2mood/pictomood.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/d2b65b4f93c3ab0234dc/maintainability)](https://codeclimate.com/github/pic2mood/pictomood/maintainability)
 
 **Pictomood produces emotions out of images.**
 
