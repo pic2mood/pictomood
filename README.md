@@ -37,3 +37,54 @@
 
 - External APIs:
    - [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection)
+
+## Contributing
+
+### Setup
+
+1. Clone this repo.
+2. Clone the [dataset](https://github.com/pic2mood/training_p2m.git) ![Size](https://github-size-badge.herokuapp.com/pic2mood/training_p2m.svg).
+
+```bash
+git clone https://github.com/pic2mood/training_p2m.git
+```
+
+3. Install dependencies.
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run
+#### Typical usage
+```bash
+python -m pictomood.pictomood --montage --score
+```
+#### Help
+```bash
+$ python -m pictomood.pictomood --help
+usage: pictomood.py [-h] [--model MODEL] [--parallel] [--batch] [--montage]
+                    [--single_path SINGLE_PATH] [--score]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --model MODEL         Two pictomood models available: oea and oea_less.
+  --parallel            Enable parallel processing for faster results.
+  --batch               Enable batch processing.
+  --montage             Embed result on the image.
+  --single_path SINGLE_PATH
+                        Single image path if batch is disabled.
+  --score               Add model accuracy score to output.
+```
+
+### Train
+#### Typical usage
+```bash
+python -m pictomood.trainer oea
+```
+
+## Authors
+
+<a href="https://github.com/raymelon"><img src="https://avatars1.githubusercontent.com/u/23053494?s=460&v=4" title="raymelon" width="80" height="80"></a>
+<a href="https://github.com/gorejuice"><img src="https://avatars2.githubusercontent.com/u/27953463?s=460&v=4" title="gorejuice" width="80" height="80"></a>
+
