@@ -6,4 +6,5 @@ install:
   - rm -r -f /home/travis/build/pic2mood/pictomood/.git
   - pip install -r requirements.txt
 script:
+  - python -m pictomood.pictomood --help
   - python -m pictomood.pictomood  --score
