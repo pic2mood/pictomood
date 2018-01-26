@@ -2,7 +2,7 @@ language: python
 python:
   - "3.6"
 install:
-  - git clone https://github.com/pic2mood/training_p2m.git /home/travis/build/pic2mood/pictomood/
+  - git clone https://github.com/pic2mood/training_p2m.git /home/travis/build/pic2mood/pictomood/training_p2m
   - rm -r /home/travis/build/pic2mood/pictomood/.git
   - pip install -r requirements.txt
 script:
