@@ -1,0 +1,7 @@
+pictomood.sublime-project
+pictomood.sublime-workspace
+*.pyc
+tests/__pycache__/
+pictomood/__pycache__/
+pictomood/lib/__pycache__/
+training_p2m/
