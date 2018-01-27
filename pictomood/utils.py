@@ -15,21 +15,20 @@ import numpy as np
 
 import collections
 from imutils import build_montages
-from cv2 import putText, FONT_HERSHEY_SIMPLEX
+from cv2 import (
+    putText, FONT_HERSHEY_SIMPLEX, BORDER_CONSTANT,
+    copyMakeBorder)
 
 from pictomood import config
 from pictomood.lib.mlp import MLP
 
 
 def image_single_loader(img_path):
-    img = io.imread(img_path)
+    max_size = 300, 300
+    img = Image.open(img_path)
+    img.thumbnail(max_size, Image.ANTIALIAS)
+    img = np.array(img)
     img = color.gray2rgb(img)
-
-    w_base = 300
-    w_percent = (w_base / float(img.shape[0]))
-    h = int((float(img.shape[1]) * float(w_percent)))
-
-    img = imresize(img, (w_base, h))
 
     return img
 
@@ -86,13 +85,13 @@ def montage(images):
 def put_text(img, text, offset, color: tuple):
 
     putText(
-        img,
-        text,
-        offset,
-        FONT_HERSHEY_SIMPLEX,
-        1.4,
-        color,
-        3
+        img=img,
+        text=text,
+        org=offset,
+        fontFace=FONT_HERSHEY_SIMPLEX,
+        fontScale=0.8,
+        color=color,
+        thickness=3
     )
 
 
@@ -156,7 +155,66 @@ def build_dataset(
     df.to_pickle(trainer['dataset'])
 
 
-def view_dataset(path):
+def view_dataset(trainer):
 
-    df = pd.read_pickle(path)
+    df = pd.read_pickle(trainer['dataset'])
     config.logger_.debug('Dataset:\n' + str(df))
+
+    to_montage = []
+
+    headers = list(df)
+    mod_df = zip(*[df[h] for h in headers])
+
+    for row in zip(mod_df):
+
+        emotion, filename = row[0][7], row[0][0]
+
+        img_path = os.path.join(
+            trainer['raw_images_dataset'],
+            emotion,
+            filename
+        )
+
+        print(img_path)
+
+        img = image_single_loader(img_path)
+
+        img = copyMakeBorder(
+            img,
+            top=0,
+            bottom=300,
+            left=0,
+            right=0,
+            borderType=BORDER_CONSTANT,
+            value=(0, 0, 0)
+        )
+
+        put_text(
+            img=img,
+            text=emotion,
+            offset=(20, 40 + 300),
+            color=(0, 255, 0)
+        )
+        put_text(
+            img=img,
+            text='TC: ' + str(row[0][1]),
+            offset=(20, 85 + 300),
+            color=(0, 255, 0)
+        )
+        put_text(
+            img=img,
+            text='CS: ' + str(row[0][4]),
+            offset=(20, 115 + 300),
+            color=(0, 255, 0)
+        )
+        put_text(
+            img=img,
+            text='TX: ' + str(row[0][5]),
+            offset=(20, 145 + 300),
+            color=(0, 255, 0)
+        )
+
+        to_montage.append(img)
+
+    montage_ = montage(to_montage)
+    show(montage_)

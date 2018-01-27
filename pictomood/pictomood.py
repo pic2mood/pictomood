@@ -115,6 +115,15 @@ class Pictomood:
 
                 if self.montage:
                     # embed the predicted result
+                    img = copyMakeBorder(
+                        img,
+                        top=0,
+                        bottom=200,
+                        left=0,
+                        right=0,
+                        borderType=BORDER_CONSTANT,
+                        value=(0, 0, 0)
+                    )
                     put_text(
                         img=img,
                         text=config.emotions_list[result[0]],
@@ -134,6 +143,24 @@ class Pictomood:
                         text=emotion_str,
                         offset=(40, 75),
                         color=color_
+                    )
+                    put_text(
+                        img=img,
+                        text='TC: ' + str(features[0]),
+                        offset=(20, 85 + 200),
+                        color=(0, 255, 0)
+                    )
+                    put_text(
+                        img=img,
+                        text='CS: ' + str(features[3]),
+                        offset=(20, 115 + 200),
+                        color=(0, 255, 0)
+                    )
+                    put_text(
+                        img=img,
+                        text='TX: ' + str(features[4]),
+                        offset=(20, 145 + 200),
+                        color=(0, 255, 0)
                     )
 
                     to_montage.append(img)

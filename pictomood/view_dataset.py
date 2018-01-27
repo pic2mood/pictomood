@@ -12,6 +12,8 @@ if __name__ == '__main__':
     from pictomood import config
     import pictomood.utils
 
-    if len(sys.argv) > 1:
-        if sys.argv[1]:
-            pictomood.utils.view_dataset(sys.argv[1])
+    # if len(sys.argv) > 1:
+    #     if sys.argv[1]:
+    #         pictomood.utils.view_dataset(sys.argv[1])
+
+    pictomood.utils.view_dataset(config.trainer_oea)
