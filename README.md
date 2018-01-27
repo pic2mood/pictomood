@@ -85,6 +85,6 @@ python -m pictomood.trainer oea
 
 ## Authors
 
-<a href="https://github.com/raymelon"><img src="https://avatars1.githubusercontent.com/u/23053494?s=460&v=4" title="raymelon" width="80" height="80"></a>
-<a href="https://github.com/gorejuice"><img src="https://avatars2.githubusercontent.com/u/27953463?s=460&v=4" title="gorejuice" width="80" height="80"></a>
+| [<img src="https://avatars1.githubusercontent.com/u/23053494?s=460&v=4" title="raymelon" width="80" height="80"><br/><sub>raymelon</sub>](https://github.com/raymelon)</br> | [<img src="https://avatars2.githubusercontent.com/u/27953463?s=460&v=4" title="gorejuice" width="80" height="80"><br/><sub>gorejuice</sub>](https://github.com/gorejuic)</br> |
+| :---: | :---: |
 
