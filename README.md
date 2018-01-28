@@ -44,11 +44,29 @@
 
 1. Fork this repo.
 2. Clone the fork.
-3. Clone the [dataset](https://github.com/pic2mood/training_p2m.git) ![Size](https://github-size-badge.herokuapp.com/pic2mood/training_p2m.svg) to project root.
+3. Clone the [dataset](https://github.com/pic2mood/training_p2m.git) ![Size](https://github-size-badge.herokuapp.com/pic2mood/training_p2m.svg) to the clone's root path.
 
 ```bash
-git clone https://github.com/pic2mood/training_p2m.git {project root path}
+# BEFORE
+pictomood # clone's root path, clone dataset here
+L .git
+L pictomood
+L # other repo files
 ```
+
+```bash
+git clone https://github.com/pic2mood/training_p2m.git {clone's root path}
+```
+
+```bash
+# AFTER
+pictomood # clone's root path, clone dataset here
+L .git
+L pictomood
+L training_p2m # dataset clone path
+L # other repo files
+```
+
 4. Setup Python environment and install dependencies.
 
 ```bash
