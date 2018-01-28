@@ -19,6 +19,8 @@ from cv2 import (
     putText, FONT_HERSHEY_SIMPLEX, BORDER_CONSTANT,
     copyMakeBorder)
 
+import matplotlib.pyplot as plt
+
 from pictomood import config
 from pictomood.lib.mlp import MLP
 
@@ -218,3 +220,42 @@ def view_dataset(trainer):
 
     montage_ = montage(to_montage)
     show(montage_)
+
+
+def plot_dataset(trainer):
+
+    def plot_emotion(df, emotion_tag, axis):
+
+        df = df[df['Emotion Tag'] == emotion_tag]
+        df = df[[
+            'Image Path',
+            # 'Top Color 1st',
+            # 'Top Color 2nd',
+            # 'Top Color 3rd',
+            #'Colorfulness',
+             'Texture'
+        ]]
+
+        graph = df.plot(
+            ax=axis,
+            kind='bar',
+            title=emotion_tag,
+            figsize=(15, 7),
+            legend=True,
+            fontsize=12,
+            # style='o',
+            grid=True
+        )
+        graph.set_xlabel('Image', fontsize=8)
+        graph.set_ylabel('Features', fontsize=12)
+
+    df = pd.read_pickle(trainer['dataset'])
+
+    fig, axes = plt.subplots(nrows=2, ncols=2)
+    fig.canvas.set_window_title('OEA Dataset')
+
+    plot_emotion(df, 'happiness', axis=axes[0, 0])
+    plot_emotion(df, 'sadness', axis=axes[0, 1])
+    plot_emotion(df, 'fear', axis=axes[1, 0])
+
+    plt.show()
