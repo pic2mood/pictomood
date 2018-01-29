@@ -16,5 +16,5 @@ if __name__ == '__main__':
     #     if sys.argv[1]:
     #         pictomood.utils.view_dataset(sys.argv[1])
 
-    # pictomood.utils.view_dataset(config.trainer_oea)
+    pictomood.utils.view_dataset(config.trainer_oea)
     pictomood.utils.plot_dataset(config.trainer_oea)
