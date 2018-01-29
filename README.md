@@ -19,8 +19,8 @@
 
 ## Dependencies
 
-- Python 3.6
-- `requirements.txt`
+- [Python 3.6](https://www.python.org/)
+- Python packages at `requirements.txt`
 
       # Available on both conda and pip
       scikit-image==0.13.0
@@ -35,21 +35,39 @@
       # Available on pip only
       colorthief==0.2.1
 
-- External APIs:
+- Repo-included APIs:
    - [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection)
 
 ## Contributing
 
 ### Setup
 
-1. Clone this repo.
-2. Clone the [dataset](https://github.com/pic2mood/training_p2m.git) ![Size](https://github-size-badge.herokuapp.com/pic2mood/training_p2m.svg).
+1. Fork this repo.
+2. Clone the fork.
+3. Clone the [dataset](https://github.com/pic2mood/training_p2m.git) ![Size](https://github-size-badge.herokuapp.com/pic2mood/training_p2m.svg) to the clone's root path.
 
 ```bash
-git clone https://github.com/pic2mood/training_p2m.git
+# BEFORE
+pictomood # clone's root path, clone dataset here
+L .git
+L pictomood
+L # other repo files
 ```
 
-3. Install dependencies.
+```bash
+git clone https://github.com/pic2mood/training_p2m.git {clone's root path}
+```
+
+```bash
+# AFTER
+pictomood # clone's root path, clone dataset here
+L .git
+L pictomood
+L training_p2m # dataset clone path
+L # other repo files
+```
+
+4. Setup Python environment and install dependencies.
 
 ```bash
 pip install -r requirements.txt
