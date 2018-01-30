@@ -3,6 +3,7 @@ from pictomood.imports import *
 
 import logging
 import traceback
+import pkg_resources
 
 from pictomood.lib.palette import Palette
 from pictomood.lib.mlp import MLP
@@ -59,24 +60,51 @@ emotions_list = [
 ]
 
 verbose = True
+as_package = True
 
-annotator_params = {
-    'model': 'ssd_mobilenet_v1_coco_11_06_2017',
-    'ckpt': os.path.join(
-        os.getcwd(),
-        'training_p2m',
-        'models',
-        'ssd_mobilenet_v1_coco_11_06_2017',
-        'frozen_inference_graph.pb'
-    ),
-    'labels': os.path.join(
-        os.getcwd(),
-        'training_p2m',
-        'data',
+try:
+    pkg_resources.resource_filename(
+        __name__,
+        'data/' +
         'mscoco_label_map.pbtxt'
-    ),
-    'classes': 90
-}
+    )
+except:
+    as_package = False
+
+
+if as_package:
+    annotator_params = {
+        'model': 'ssd_mobilenet_v1_coco_11_06_2017',
+        'ckpt': pkg_resources.resource_filename(
+            __name__,
+            'data/' +
+            'ssd_mobilenet_v1_coco_11_06_2017/' +
+            'frozen_inference_graph.pb'
+
+        ),
+        'labels': pkg_resources.resource_filename(
+            __name__,
+            'data/' +
+            'mscoco_label_map.pbtxt'
+        ),
+        'classes': 90
+    }
+else:
+    annotator_params = {
+        'model': 'ssd_mobilenet_v1_coco_11_06_2017',
+        'ckpt': os.path.join(
+            os.getcwd(),
+            'data',
+            'ssd_mobilenet_v1_coco_11_06_2017',
+            'frozen_inference_graph.pb'
+        ),
+        'labels': os.path.join(
+            os.getcwd(),
+            'data',
+            'mscoco_label_map.pbtxt'
+        ),
+        'classes': 90
+    }
 
 annotator = Annotator(
     model=annotator_params['model'],
