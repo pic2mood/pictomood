@@ -18,7 +18,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pictomood=pictomood.main'
+            'pictomood = pictomood.pictomood:main'
         ]
     },
     install_requires=[
@@ -35,6 +35,7 @@ setup(
     include_package_data=True,
     package_data={'pictomood': [
         'data/*.pbtxt',
+        'data/*.pkl',
         'data/ssd_mobilenet_v1_coco_11_06_2017/*.pb'
     ]}
 )

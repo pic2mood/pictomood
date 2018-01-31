@@ -11,6 +11,7 @@ from pictomood.lib.mlp import MLP
 from pictomood.utils import *
 
 import multiprocessing as mp
+import argparse
 
 
 class Pictomood:
@@ -95,7 +96,7 @@ class Pictomood:
         for emotion_str, emotion_val in emotions.items():
 
             dir_images = os.path.join(
-                trainer['raw_images_testset'],
+                self.trainer['raw_images_testset'],
                 emotion_str
             )
 
@@ -217,9 +218,7 @@ class Pictomood:
             print('Score:', self.mlp.model.score([features], [result]))
 
 
-if __name__ == '__main__':
-
-    import argparse
+def main(args=None):
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -292,3 +291,7 @@ if __name__ == '__main__':
         enna.batch_process()
     else:
         enna.single_process()
+
+
+if __name__ == '__main__':
+    main()

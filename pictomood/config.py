@@ -72,39 +72,68 @@ except:
     as_package = False
 
 
-if as_package:
-    annotator_params = {
-        'model': 'ssd_mobilenet_v1_coco_11_06_2017',
-        'ckpt': pkg_resources.resource_filename(
+def path_as(blobs):
+    if as_package:
+        path = pkg_resources.resource_filename(
             __name__,
-            'data/' +
-            'ssd_mobilenet_v1_coco_11_06_2017/' +
-            'frozen_inference_graph.pb'
+            '/'.join(blobs)
+        )
+    else:
+        path = os.path.join(
+            os.getcwd(),
+            *blobs
+        )
 
-        ),
-        'labels': pkg_resources.resource_filename(
-            __name__,
-            'data/' +
-            'mscoco_label_map.pbtxt'
-        ),
-        'classes': 90
-    }
-else:
-    annotator_params = {
-        'model': 'ssd_mobilenet_v1_coco_11_06_2017',
-        'ckpt': os.path.join(
-            os.getcwd(),
-            'data',
-            'ssd_mobilenet_v1_coco_11_06_2017',
-            'frozen_inference_graph.pb'
-        ),
-        'labels': os.path.join(
-            os.getcwd(),
-            'data',
-            'mscoco_label_map.pbtxt'
-        ),
-        'classes': 90
-    }
+    return path
+
+
+annotator_params = {
+    'model': 'ssd_mobilenet_v1_coco_11_06_2017',
+    'ckpt': path_as([
+        'data',
+        'ssd_mobilenet_v1_coco_11_06_2017',
+        'frozen_inference_graph.pb'
+    ]),
+    'labels': path_as([
+        'data',
+        'mscoco_label_map.pbtxt'
+    ]),
+    'classes': 90
+}
+
+# if as_package:
+#     annotator_params = {
+#         'model': 'ssd_mobilenet_v1_coco_11_06_2017',
+#         'ckpt': pkg_resources.resource_filename(
+#             __name__,
+#             'data/' +
+#             'ssd_mobilenet_v1_coco_11_06_2017/' +
+#             'frozen_inference_graph.pb'
+
+#         ),
+#         'labels': pkg_resources.resource_filename(
+#             __name__,
+#             'data/' +
+#             'mscoco_label_map.pbtxt'
+#         ),
+#         'classes': 90
+#     }
+# else:
+#     annotator_params = {
+#         'model': 'ssd_mobilenet_v1_coco_11_06_2017',
+#         'ckpt': os.path.join(
+#             os.getcwd(),
+#             'data',
+#             'ssd_mobilenet_v1_coco_11_06_2017',
+#             'frozen_inference_graph.pb'
+#         ),
+#         'labels': os.path.join(
+#             os.getcwd(),
+#             'data',
+#             'mscoco_label_map.pbtxt'
+#         ),
+#         'classes': 90
+#     }
 
 annotator = Annotator(
     model=annotator_params['model'],
@@ -151,24 +180,19 @@ trainer_oea_less = {
 }
 
 trainer_oea = {
-    'dataset': os.path.join(
-        os.getcwd(),
-        'training_p2m',
+    'dataset': path_as([
         'data',
         'oea_dataset.pkl'
-    ),
-    'testset': os.path.join(
-        os.getcwd(),
-        'training_p2m',
+    ]),
+    # 'testset': path_as([
+    #     'data',
+    #     'oea_testset.pkl'
+    # ]),
+    'model': path_as([
         'data',
-        'oea_testset.pkl'
-    ),
-    'model': os.path.join(
-        os.getcwd(),
-        'training_p2m',
-        'models',
         'oea_model.pkl'
-    ),
+    ]),
+
     'raw_images_dataset': os.path.join(
         os.getcwd(),
         'training_p2m',
@@ -181,6 +205,7 @@ trainer_oea = {
         'data',
         'testset'
     ),
+
     'features': {
         'top_colors': Palette.dominant_colors,
         'colorfulness': Color.scaled_colorfulness,
