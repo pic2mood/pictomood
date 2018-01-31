@@ -177,6 +177,8 @@ class Pictomood:
         if self.score:
             print('Score:', self.mlp.model.score(input_, output))
 
+        return output
+
     def single_process(self):
 
         print(self.single_path)
@@ -217,80 +219,95 @@ class Pictomood:
         if self.score:
             print('Score:', self.mlp.model.score([features], [result]))
 
+        return config.emotions_list[result[0]]
 
-def main(args=None):
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--model',
-        action='store',
-        dest='model',
-        default='oea',
-        help='Two pictomood models available: oea and oea_less.'
-    )
-    parser.add_argument(
-        '--parallel',
-        action='store_true',
-        default=False,
-        dest='parallel',
-        help='Enable parallel processing for faster results.'
-    )
-    parser.add_argument(
-        '--batch',
-        action='store_true',
-        default=False,
-        dest='batch',
-        help='Enable batch processing.'
-    )
-    parser.add_argument(
-        '--montage',
-        action='store_true',
-        default=False,
-        dest='montage',
-        help='Embed result on the image.'
-    )
-    parser.add_argument(
-        '--single_path',
-        dest='single_path',
-        default=os.path.join(
-            os.getcwd(),
-            'training_p2m',
-            'data',
-            'testset',
-            'happiness',
-            'img17.jpg'
-        ),
-        help='Single image path if batch is disabled.'
-    )
-    parser.add_argument(
-        '--score',
-        action='store_true',
-        dest='score',
-        default=False,
-        help='Add model accuracy score to output.'
-    )
+def main(args_=None):
 
-    args = parser.parse_args()
+    if not args_:
 
-    if args.model == 'oea':
+        parser = argparse.ArgumentParser()
+        parser.add_argument(
+            '--model',
+            action='store',
+            dest='model',
+            default='oea',
+            help='Two pictomood models available: oea and oea_less.'
+        )
+        parser.add_argument(
+            '--parallel',
+            action='store_true',
+            default=False,
+            dest='parallel',
+            help='Enable parallel processing for faster results.'
+        )
+        parser.add_argument(
+            '--batch',
+            action='store_true',
+            default=False,
+            dest='batch',
+            help='Enable batch processing.'
+        )
+        parser.add_argument(
+            '--montage',
+            action='store_true',
+            default=False,
+            dest='montage',
+            help='Embed result on the image.'
+        )
+        parser.add_argument(
+            '--single_path',
+            dest='single_path',
+            default=os.path.join(
+                os.getcwd(),
+                'training_p2m',
+                'data',
+                'testset',
+                'happiness',
+                'img17.jpg'
+            ),
+            help='Single image path if batch is disabled.'
+        )
+        parser.add_argument(
+            '--score',
+            action='store_true',
+            dest='score',
+            default=False,
+            help='Add model accuracy score to output.'
+        )
+
+        args_ = parser.parse_args()
+        args['model'] = args_.model
+        args['parallel'] = args_.parallel
+        args['batch'] = args_.batch
+        args['montage'] = args_.montage
+        args['single_path'] = args._single_path
+        args['score'] = args_.score
+
+    else:
+        args = args_
+
+    if args['model'] == 'oea':
         trainer = config.trainer_oea
 
-    elif args.model == 'oea_less':
+    elif args['model'] == 'oea_less':
         trainer = config.trainer_oea_less
 
     enna = Pictomood(
         trainer=trainer,
-        parallel=args.parallel,
-        batch=args.batch,
-        montage=args.montage,
-        single_path=args.single_path,
-        score=args.score
+        parallel=args['parallel'],
+        batch=args['batch'],
+        montage=args['montage'],
+        single_path=args['single_path'],
+        score=args['score']
     )
 
-    if args.batch:
-        enna.batch_process()
+    if args['batch']:
+        result = enna.batch_process()
     else:
-        enna.single_process()
+        result = enna.single_process()
+
+    return result
 
 
 if __name__ == '__main__':
