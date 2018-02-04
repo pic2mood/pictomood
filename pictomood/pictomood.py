@@ -277,11 +277,21 @@ def main(args_=None):
         )
 
         args_ = parser.parse_args()
+
+        args = {
+            'single_path': '',
+            'score': True,
+            'model': 'oea',
+            'parallel': False,
+            'batch': False,
+            'montage': False
+        }
+
         args['model'] = args_.model
         args['parallel'] = args_.parallel
         args['batch'] = args_.batch
         args['montage'] = args_.montage
-        args['single_path'] = args._single_path
+        args['single_path'] = args_.single_path
         args['score'] = args_.score
 
     else:
