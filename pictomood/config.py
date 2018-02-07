@@ -143,25 +143,69 @@ annotator = Annotator(
 )
 
 
+# trainer_oea_less = {
+#     'dataset': os.path.join(
+#         os.getcwd(),
+#         'training_p2m',
+#         'data',
+#         'oea_less_dataset.pkl'
+#     ),
+#     'model': os.path.join(
+#         os.getcwd(),
+#         'training_p2m',
+#         'models',
+#         'oea_less_model.pkl'
+#     ),
+#     'raw_images_root': os.path.join(
+#         os.getcwd(),
+#         'training_p2m',
+#         'data',
+#         'images'
+#     ),
+#     'features': {
+#         'top_colors': Palette.dominant_colors,
+#         'colorfulness': Color.scaled_colorfulness,
+#         'texture': Texture.texture
+#     },
+#     'columns': [
+#         'Image Path',
+#         'Top Color 1st',
+#         'Top Color 2nd',
+#         'Top Color 3rd',
+#         'Colorfulness',
+#         'Texture',
+#         'Emotion Tag',
+#         'Emotion Value'
+#     ]
+# }
+
 trainer_oea_less = {
-    'dataset': os.path.join(
-        os.getcwd(),
-        'training_p2m',
+    'dataset': path_as([
         'data',
         'oea_less_dataset.pkl'
-    ),
-    'model': os.path.join(
-        os.getcwd(),
-        'training_p2m',
-        'models',
+    ]),
+    # 'testset': path_as([
+    #     'data',
+    #     'oea_testset.pkl'
+    # ]),
+    'model': path_as([
+        'data',
         'oea_less_model.pkl'
-    ),
-    'raw_images_root': os.path.join(
+    ]),
+
+    'raw_images_dataset': os.path.join(
         os.getcwd(),
         'training_p2m',
         'data',
-        'images'
+        'dataset'
     ),
+    'raw_images_testset': os.path.join(
+        os.getcwd(),
+        'training_p2m',
+        'data',
+        'testset'
+    ),
+
     'features': {
         'top_colors': Palette.dominant_colors,
         'colorfulness': Color.scaled_colorfulness,
@@ -178,6 +222,7 @@ trainer_oea_less = {
         'Emotion Value'
     ]
 }
+
 
 trainer_oea = {
     'dataset': path_as([

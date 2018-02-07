@@ -114,7 +114,9 @@ def train(trainer, inputs):
 
 
 def build_dataset(
-    trainer, emotion_combinations=['happiness', 'sadness', 'fear']
+    trainer, 
+    dry_run=False,
+    emotion_combinations=['happiness', 'sadness', 'fear']
 ):
     # emotion filtering
     emotions = {}
@@ -149,12 +151,13 @@ def build_dataset(
             data.append(datum)
 
     # dataset saving
-    df = pd.DataFrame(
-        data,
-        columns=trainer['columns']
-    )
-    config.logger_.debug('Dataset:\n' + str(df))
-    df.to_pickle(trainer['dataset'])
+    if not dry_run:
+        df = pd.DataFrame(
+            data,
+            columns=trainer['columns']
+        )
+        config.logger_.debug('Dataset:\n' + str(df))
+        df.to_pickle(trainer['dataset'])
 
 
 def view_dataset(trainer):
