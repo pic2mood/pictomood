@@ -19,6 +19,8 @@ from cv2 import (
     putText, FONT_HERSHEY_SIMPLEX, BORDER_CONSTANT,
     copyMakeBorder)
 
+import matplotlib.pyplot as plt
+
 from pictomood import config
 from pictomood.lib.mlp import MLP
 
@@ -112,7 +114,9 @@ def train(trainer, inputs):
 
 
 def build_dataset(
-    trainer, emotion_combinations=['happiness', 'sadness', 'fear']
+    trainer, 
+    dry_run=False,
+    emotion_combinations=['happiness', 'sadness', 'fear']
 ):
     # emotion filtering
     emotions = {}
@@ -147,12 +151,13 @@ def build_dataset(
             data.append(datum)
 
     # dataset saving
-    df = pd.DataFrame(
-        data,
-        columns=trainer['columns']
-    )
-    config.logger_.debug('Dataset:\n' + str(df))
-    df.to_pickle(trainer['dataset'])
+    if not dry_run:
+        df = pd.DataFrame(
+            data,
+            columns=trainer['columns']
+        )
+        config.logger_.debug('Dataset:\n' + str(df))
+        df.to_pickle(trainer['dataset'])
 
 
 def view_dataset(trainer):
@@ -175,7 +180,7 @@ def view_dataset(trainer):
             filename
         )
 
-        print(img_path)
+        # print(img_path)
 
         img = image_single_loader(img_path)
 
@@ -218,3 +223,69 @@ def view_dataset(trainer):
 
     montage_ = montage(to_montage)
     show(montage_)
+
+
+def plot_dataset(trainer):
+
+    def plot_emotion(fig, df, emotion_tag, axis, features=[]):
+
+        features = ['Image Path'] + features
+
+        df = df[df['Emotion Tag'] == emotion_tag]
+        df = df[features]
+
+        graph = df.plot(
+            ax=axis,
+            kind='bar',
+            title=emotion_tag,
+            figsize=(15, 7),
+            legend=True,
+            fontsize=12,
+            # style='o',
+            grid=True
+        )
+        graph.set_xlabel('Image', fontsize=8)
+        graph.set_ylabel('Features', fontsize=12)
+
+    df = pd.read_pickle(trainer['dataset'])
+
+    fig, axes = plt.subplots(nrows=2, ncols=1)
+    fig.canvas.set_window_title('happiness')
+    plot_emotion(fig, df, 'happiness', axis=axes[0],
+        features=[
+            'Top Color 1st',
+            'Top Color 2nd',
+            'Top Color 3rd',
+            'Colorfulness'
+        ]
+    ) 
+    plot_emotion(fig, df, 'happiness', axis=axes[1], features=['Texture'])   
+    plt.show(block=False)
+
+    fig, axes = plt.subplots(nrows=2, ncols=1)
+    fig.canvas.set_window_title('sadness')
+    plot_emotion(fig, df, 'sadness', axis=axes[0],
+        features=[
+            'Top Color 1st',
+            'Top Color 2nd',
+            'Top Color 3rd',
+            'Colorfulness'
+            ]
+    )
+    plot_emotion(fig, df, 'sadness', axis=axes[1], features=['Texture'])
+    plt.show(block=False)
+
+    fig, axes = plt.subplots(nrows=2, ncols=1)
+    fig.canvas.set_window_title('fear')
+    plot_emotion(fig, df, 'fear', axis=axes[0],
+        features=[
+            'Top Color 1st',
+            'Top Color 2nd',
+            'Top Color 3rd',
+            'Colorfulness'
+            ]
+    )
+    plot_emotion(fig, df, 'fear', axis=axes[1], features=['Texture'])
+    plt.show(block=False)
+
+    plt.show()
