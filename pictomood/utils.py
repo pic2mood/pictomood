@@ -180,7 +180,7 @@ def view_dataset(trainer):
             filename
         )
 
-        print(img_path)
+        # print(img_path)
 
         img = image_single_loader(img_path)
 
@@ -227,17 +227,12 @@ def view_dataset(trainer):
 
 def plot_dataset(trainer):
 
-    def plot_emotion(df, emotion_tag, axis):
+    def plot_emotion(fig, df, emotion_tag, axis, features=[]):
+
+        features = ['Image Path'] + features
 
         df = df[df['Emotion Tag'] == emotion_tag]
-        df = df[[
-            'Image Path',
-            # 'Top Color 1st',
-            # 'Top Color 2nd',
-            # 'Top Color 3rd',
-            #'Colorfulness',
-             'Texture'
-        ]]
+        df = df[features]
 
         graph = df.plot(
             ax=axis,
@@ -254,11 +249,43 @@ def plot_dataset(trainer):
 
     df = pd.read_pickle(trainer['dataset'])
 
-    fig, axes = plt.subplots(nrows=2, ncols=2)
-    fig.canvas.set_window_title('OEA Dataset')
+    fig, axes = plt.subplots(nrows=2, ncols=1)
+    fig.canvas.set_window_title('happiness')
+    plot_emotion(fig, df, 'happiness', axis=axes[0],
+        features=[
+            'Top Color 1st',
+            'Top Color 2nd',
+            'Top Color 3rd',
+            'Colorfulness'
+        ]
+    ) 
+    plot_emotion(fig, df, 'happiness', axis=axes[1], features=['Texture'])   
+    plt.show(block=False)
 
-    plot_emotion(df, 'happiness', axis=axes[0, 0])
-    plot_emotion(df, 'sadness', axis=axes[0, 1])
-    plot_emotion(df, 'fear', axis=axes[1, 0])
+    fig, axes = plt.subplots(nrows=2, ncols=1)
+    fig.canvas.set_window_title('sadness')
+    plot_emotion(fig, df, 'sadness', axis=axes[0],
+        features=[
+            'Top Color 1st',
+            'Top Color 2nd',
+            'Top Color 3rd',
+            'Colorfulness'
+            ]
+    )
+    plot_emotion(fig, df, 'sadness', axis=axes[1], features=['Texture'])
+    plt.show(block=False)
+
+    fig, axes = plt.subplots(nrows=2, ncols=1)
+    fig.canvas.set_window_title('fear')
+    plot_emotion(fig, df, 'fear', axis=axes[0],
+        features=[
+            'Top Color 1st',
+            'Top Color 2nd',
+            'Top Color 3rd',
+            'Colorfulness'
+            ]
+    )
+    plot_emotion(fig, df, 'fear', axis=axes[1], features=['Texture'])
+    plt.show(block=False)
 
     plt.show()
