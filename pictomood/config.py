@@ -203,7 +203,8 @@ trainer_oea_less = {
         os.getcwd(),
         'training_p2m',
         'data',
-        'testset'
+        'testset_confusion_matrix'
+        # 'testset'
     ),
 
     'features': {
@@ -248,7 +249,8 @@ trainer_oea = {
         os.getcwd(),
         'training_p2m',
         'data',
-        'testset'
+        # 'testset'
+        'testset_confusion_matrix'
     ),
 
     'features': {
