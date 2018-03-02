@@ -4,24 +4,24 @@ from pictomood.config import *
 trainer = {
     'dataset': path_as([
         'data',
-        'oea_sadness_dataset.pkl'
+        'oea_less_fear_dataset.pkl'
     ]),
     'model': path_as([
         'data',
-        'oea_sadness_model.pkl'
+        'oea_less_fear_model.pkl'
     ]),
 
     'raw_images_dataset': os.path.join(
         os.getcwd(),
         'training_p2m',
         'data',
-        'testset_confusion_matrix_sadness'
+        'testset_confusion_matrix_fear'
     ),
     'raw_images_testset': os.path.join(
         os.getcwd(),
         'training_p2m',
         'data',
-        'testset_confusion_matrix_sadness',
+        'testset_confusion_matrix_fear',
     ),
 
     'features': {

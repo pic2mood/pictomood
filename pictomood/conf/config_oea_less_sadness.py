@@ -4,11 +4,11 @@ from pictomood.config import *
 trainer = {
     'dataset': path_as([
         'data',
-        'oea_sadness_dataset.pkl'
+        'oea_less_sadness_dataset.pkl'
     ]),
     'model': path_as([
         'data',
-        'oea_sadness_model.pkl'
+        'oea_less_sadness_model.pkl'
     ]),
 
     'raw_images_dataset': os.path.join(

@@ -9,6 +9,7 @@ from pictomood import config
 from pictomood.utils import *
 
 import argparse
+import importlib
 
 
 def train_emotion(trainer_, dry_run=False, combinations=None):
@@ -62,7 +63,7 @@ if __name__ == '__main__':
         '--model',
         action='store',
         dest='model',
-        default='oea',
+        default='oea_all',
         help='Two pictomood models available: oea and oea_less.'
     )
     parser.add_argument(
@@ -75,12 +76,13 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.model == 'oea':
-        trainer = config.trainer_oea
+    # if args.model == 'oea':
+    #     trainer = config.trainer_oea
 
-    elif args.model == 'oea_less':
-        trainer = config.trainer_oea_less
+    # elif args.model == 'oea_less':
+    #     trainer = config.trainer_oea_less
 
+    trainer = importlib.import_module('pictomood.conf.config_' + args.model).trainer
 
     train_emotion(
         trainer_=trainer,
