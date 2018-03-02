@@ -86,7 +86,9 @@ usage: pictomood.py [-h] [--model MODEL] [--parallel] [--batch] [--montage]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --model MODEL         Two pictomood models available: oea and oea_less.
+  --model MODEL         Models are available in /conf.Argument is the config
+                        filename suffix. (e.g. --model oea_all # for
+                        config_oea_all config file).
   --parallel            Enable parallel processing for faster results.
   --batch               Enable batch processing.
   --montage             Embed result on the image.
@@ -98,7 +100,15 @@ optional arguments:
 ### Train
 #### Typical usage
 ```bash
-python -m pictomood.trainer oea
+$ python -m pictomood.trainer oea --help
+usage: trainer.py [-h] [--model MODEL] [--dry_run]
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --model MODEL  Models are available in /conf.Argument is the config filename
+                 suffix. (e.g. --model oea_all # for config_oea_all config
+                 file).
+  --dry_run      When enabled, the trained model won't be saved.
 ```
 
 ## Authors
