@@ -9,9 +9,11 @@ from pictomood.imports import *
 from pictomood import config
 from pictomood.lib.mlp import MLP
 from pictomood.utils import *
+from pictomood import conf
 
 import multiprocessing as mp
 import argparse
+import importlib
 
 
 class Pictomood:
@@ -231,8 +233,9 @@ def main(args_=None):
             '--model',
             action='store',
             dest='model',
-            default='oea',
-            help='Two pictomood models available: oea and oea_less.'
+            default='oea_all',
+            help='Models are available in /conf. ' +
+            'Argument is the config filename suffix. (e.g. --model oea_all # for config_oea_all config file).'
         )
         parser.add_argument(
             '--parallel',
@@ -281,7 +284,7 @@ def main(args_=None):
         args = {
             'single_path': '',
             'score': True,
-            'model': 'oea',
+            'model': 'oea_all',
             'parallel': False,
             'batch': False,
             'montage': False
@@ -297,11 +300,13 @@ def main(args_=None):
     else:
         args = args_
 
-    if args['model'] == 'oea':
-        trainer = config.trainer_oea
+    # if args['model'] == 'oea':
+    #     trainer = config.trainer_oea
 
-    elif args['model'] == 'oea_less':
-        trainer = config.trainer_oea_less
+    # elif args['model'] == 'oea_less':
+    #     trainer = config.trainer_oea_less
+
+    trainer = importlib.import_module('pictomood.conf.config_' + args['model']).trainer
 
     enna = Pictomood(
         trainer=trainer,
