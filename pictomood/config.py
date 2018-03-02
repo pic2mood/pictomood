@@ -101,40 +101,6 @@ annotator_params = {
     'classes': 90
 }
 
-# if as_package:
-#     annotator_params = {
-#         'model': 'ssd_mobilenet_v1_coco_11_06_2017',
-#         'ckpt': pkg_resources.resource_filename(
-#             __name__,
-#             'data/' +
-#             'ssd_mobilenet_v1_coco_11_06_2017/' +
-#             'frozen_inference_graph.pb'
-
-#         ),
-#         'labels': pkg_resources.resource_filename(
-#             __name__,
-#             'data/' +
-#             'mscoco_label_map.pbtxt'
-#         ),
-#         'classes': 90
-#     }
-# else:
-#     annotator_params = {
-#         'model': 'ssd_mobilenet_v1_coco_11_06_2017',
-#         'ckpt': os.path.join(
-#             os.getcwd(),
-#             'data',
-#             'ssd_mobilenet_v1_coco_11_06_2017',
-#             'frozen_inference_graph.pb'
-#         ),
-#         'labels': os.path.join(
-#             os.getcwd(),
-#             'data',
-#             'mscoco_label_map.pbtxt'
-#         ),
-#         'classes': 90
-#     }
-
 annotator = Annotator(
     model=annotator_params['model'],
     ckpt=annotator_params['ckpt'],
@@ -142,52 +108,11 @@ annotator = Annotator(
     classes=annotator_params['classes']
 )
 
-
-# trainer_oea_less = {
-#     'dataset': os.path.join(
-#         os.getcwd(),
-#         'training_p2m',
-#         'data',
-#         'oea_less_dataset.pkl'
-#     ),
-#     'model': os.path.join(
-#         os.getcwd(),
-#         'training_p2m',
-#         'models',
-#         'oea_less_model.pkl'
-#     ),
-#     'raw_images_root': os.path.join(
-#         os.getcwd(),
-#         'training_p2m',
-#         'data',
-#         'images'
-#     ),
-#     'features': {
-#         'top_colors': Palette.dominant_colors,
-#         'colorfulness': Color.scaled_colorfulness,
-#         'texture': Texture.texture
-#     },
-#     'columns': [
-#         'Image Path',
-#         'Top Color 1st',
-#         'Top Color 2nd',
-#         'Top Color 3rd',
-#         'Colorfulness',
-#         'Texture',
-#         'Emotion Tag',
-#         'Emotion Value'
-#     ]
-# }
-
 trainer_oea_less = {
     'dataset': path_as([
         'data',
         'oea_less_dataset.pkl'
     ]),
-    # 'testset': path_as([
-    #     'data',
-    #     'oea_testset.pkl'
-    # ]),
     'model': path_as([
         'data',
         'oea_less_model.pkl'
@@ -230,10 +155,6 @@ trainer_oea = {
         'data',
         'oea_dataset.pkl'
     ]),
-    # 'testset': path_as([
-    #     'data',
-    #     'oea_testset.pkl'
-    # ]),
     'model': path_as([
         'data',
         'oea_model.pkl'
