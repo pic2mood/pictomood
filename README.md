@@ -55,7 +55,8 @@ L # other repo files
 ```
 
 ```bash
-git clone https://github.com/pic2mood/training_p2m.git {clone's root path}
+# TO CLONE,
+$ git clone https://github.com/pic2mood/training_p2m.git {clone's root path}
 ```
 
 ```bash
@@ -67,10 +68,11 @@ L training_p2m # dataset clone path
 L # other repo files
 ```
 
-4. Setup Python environment and install dependencies.
+4. Setup Python environment.
+5. Install dependencies.
 
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ### Run
