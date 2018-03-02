@@ -68,7 +68,7 @@ L training_p2m # dataset clone path
 L # other repo files
 ```
 
-4. Setup Python environment.
+4. Setup Python [environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 5. Install dependencies.
 
 ```bash
