@@ -10,6 +10,7 @@ from pictomood import config
 from pictomood.lib.mlp import MLP
 from pictomood.utils import *
 from pictomood import conf
+from pictomood import args_parser
 
 import multiprocessing as mp
 import argparse
@@ -228,58 +229,71 @@ def main(args_=None):
 
     if not args_:
 
-        parser = argparse.ArgumentParser()
-        parser.add_argument(
-            '--model',
-            action='store',
-            dest='model',
-            default='oea_all',
-            help='Models are available in /conf. ' +
-            'Argument is the config filename suffix. (e.g. --model oea_all # for config_oea_all config file).'
-        )
-        parser.add_argument(
-            '--parallel',
-            action='store_true',
-            default=False,
-            dest='parallel',
-            help='Enable parallel processing for faster results.'
-        )
-        parser.add_argument(
-            '--batch',
-            action='store_true',
-            default=False,
-            dest='batch',
-            help='Enable batch processing.'
-        )
-        parser.add_argument(
-            '--montage',
-            action='store_true',
-            default=False,
-            dest='montage',
-            help='Embed result on the image.'
-        )
-        parser.add_argument(
-            '--single_path',
-            dest='single_path',
-            default=os.path.join(
-                os.getcwd(),
-                'training_p2m',
-                'data',
-                'testset',
-                'happiness',
-                'img17.jpg'
-            ),
-            help='Single image path if batch is disabled.'
-        )
-        parser.add_argument(
-            '--score',
-            action='store_true',
-            dest='score',
-            default=False,
-            help='Add model accuracy score to output.'
-        )
+        # parser = argparse.ArgumentParser()
+        # parser.add_argument(
+        #     '--model',
+        #     action='store',
+        #     dest='model',
+        #     default='oea_all',
+        #     help='Models are available in /conf. ' +
+        #     'Argument is the config filename suffix. (e.g. --model oea_all # for config_oea_all config file).'
+        # )
+        # parser.add_argument(
+        #     '--parallel',
+        #     action='store_true',
+        #     default=False,
+        #     dest='parallel',
+        #     help='Enable parallel processing for faster results.'
+        # )
+        # parser.add_argument(
+        #     '--batch',
+        #     action='store_true',
+        #     default=False,
+        #     dest='batch',
+        #     help='Enable batch processing.'
+        # )
+        # parser.add_argument(
+        #     '--montage',
+        #     action='store_true',
+        #     default=False,
+        #     dest='montage',
+        #     help='Embed result on the image.'
+        # )
+        # parser.add_argument(
+        #     '--single_path',
+        #     dest='single_path',
+        #     default=os.path.join(
+        #         os.getcwd(),
+        #         'training_p2m',
+        #         'data',
+        #         'testset',
+        #         'happiness',
+        #         'img17.jpg'
+        #     ),
+        #     help='Single image path if batch is disabled.'
+        # )
+        # parser.add_argument(
+        #     '--score',
+        #     action='store_true',
+        #     dest='score',
+        #     default=False,
+        #     help='Add model accuracy score to output.'
+        # )
 
-        args_ = parser.parse_args()
+        # args_ = parser.parse_args()
+
+        parser = args_parser.ArgsParser()
+
+        args_ = parser.custom_parser(
+            args_list=[
+                'single_path',
+                'score',
+                'model',
+                'parallel',
+                'batch',
+                'montage'
+            ]
+        ).parse_args()
 
         args = {
             'single_path': '',

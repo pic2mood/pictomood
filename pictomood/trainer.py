@@ -7,6 +7,7 @@
 """
 from pictomood import config
 from pictomood.utils import *
+from pictomood import args_parser
 
 import argparse
 import importlib
@@ -58,24 +59,33 @@ if __name__ == '__main__':
     #     else:
     #         raise ValueError('Invalid argument {0}'.format(sys.argv[1]))
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--model',
-        action='store',
-        dest='model',
-        default='oea_all',
-        help='Models are available in /conf. ' +
-            'Argument is the config filename suffix. (e.g. --model oea_all # for config_oea_all config file).'
-    )
-    parser.add_argument(
-        '--dry_run',
-        action='store_true',
-        default=False,
-        dest='dry_run',
-        help='When enabled, the trained model won\'t be saved.'
-    )
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument(
+    #     '--model',
+    #     action='store',
+    #     dest='model',
+    #     default='oea_all',
+    #     help='Models are available in /conf. ' +
+    #         'Argument is the config filename suffix. (e.g. --model oea_all # for config_oea_all config file).'
+    # )
+    # parser.add_argument(
+    #     '--dry_run',
+    #     action='store_true',
+    #     default=False,
+    #     dest='dry_run',
+    #     help='When enabled, the trained model won\'t be saved.'
+    # )
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
+
+    parser = args_parser.ArgsParser()
+
+    args_ = parser.custom_parser(
+        args_list=[
+            'model',
+            'dry_run'
+        ]
+    ).parse_args()
 
     # if args.model == 'oea':
     #     trainer = config.trainer_oea
@@ -83,9 +93,9 @@ if __name__ == '__main__':
     # elif args.model == 'oea_less':
     #     trainer = config.trainer_oea_less
 
-    trainer = importlib.import_module('pictomood.conf.config_' + args.model).trainer
+    trainer = importlib.import_module('pictomood.conf.config_' + args_.model).trainer
 
     train_emotion(
         trainer_=trainer,
-        dry_run=args.dry_run
+        dry_run=args_.dry_run
     )
