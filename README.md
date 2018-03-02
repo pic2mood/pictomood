@@ -55,7 +55,8 @@ L # other repo files
 ```
 
 ```bash
-git clone https://github.com/pic2mood/training_p2m.git {clone's root path}
+# TO CLONE,
+$ git clone https://github.com/pic2mood/training_p2m.git {clone's root path}
 ```
 
 ```bash
@@ -67,10 +68,11 @@ L training_p2m # dataset clone path
 L # other repo files
 ```
 
-4. Setup Python environment and install dependencies.
+4. Setup Python [environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
+5. Install dependencies.
 
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ### Run
@@ -86,7 +88,9 @@ usage: pictomood.py [-h] [--model MODEL] [--parallel] [--batch] [--montage]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --model MODEL         Two pictomood models available: oea and oea_less.
+  --model MODEL         Models are available in /conf. Argument is the config
+                        filename suffix. (e.g. --model oea_all # for
+                        config_oea_all config file).
   --parallel            Enable parallel processing for faster results.
   --batch               Enable batch processing.
   --montage             Embed result on the image.
@@ -98,11 +102,23 @@ optional arguments:
 ### Train
 #### Typical usage
 ```bash
-python -m pictomood.trainer oea
+python -m pictomood.trainer --model oea_all
+```
+#### Help
+```bash
+$ python -m pictomood.trainer oea --help
+usage: trainer.py [-h] [--model MODEL] [--dry_run]
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --model MODEL  Models are available in /conf. Argument is the config filename
+                 suffix. (e.g. --model oea_all # for config_oea_all config
+                 file).
+  --dry_run      When enabled, the trained model won't be saved.
 ```
 
 ## Authors
 
-| [<img src="https://avatars1.githubusercontent.com/u/23053494?s=460&v=4" title="raymelon" width="80" height="80"><br/><sub>raymelon</sub>](https://github.com/raymelon)</br> | [<img src="https://avatars2.githubusercontent.com/u/27953463?s=460&v=4" title="gorejuice" width="80" height="80"><br/><sub>gorejuice</sub>](https://github.com/gorejuic)</br> |
+| [<img src="https://avatars1.githubusercontent.com/u/23053494?s=460&v=4" title="raymelon" width="80" height="80"><br/><sub>raymelon</sub>](https://github.com/raymelon)</br> | [<img src="https://avatars2.githubusercontent.com/u/27953463?s=460&v=4" title="gorejuice" width="80" height="80"><br/><sub>gorejuice</sub>](https://github.com/gorejuice)</br> |
 | :---: | :---: |
 
