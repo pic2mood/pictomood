@@ -64,7 +64,8 @@ if __name__ == '__main__':
         action='store',
         dest='model',
         default='oea_all',
-        help='Two pictomood models available: oea and oea_less.'
+        help='Models are available in /conf. ' +
+            'Argument is the config filename suffix. (e.g. --model oea_all # for config_oea_all config file).'
     )
     parser.add_argument(
         '--dry_run',
