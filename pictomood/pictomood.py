@@ -102,7 +102,8 @@ class Pictomood:
         for emotion_str, emotion_val in emotions.items():
 
             dir_images = os.path.join(
-                self.trainer['raw_images_testset'],
+                # self.trainer['raw_images_testset'],
+                importlib.import_module('pictomood.conf.oea_confusion_matrix_all').trainer['raw_images_testset'],
                 emotion_str
             )
 
@@ -356,7 +357,7 @@ def main(args_=None):
     # elif args['model'] == 'oea_less':
     #     trainer = config.trainer_oea_less
 
-    trainer = importlib.import_module('pictomood.conf.config_' + args['model']).trainer
+    trainer = importlib.import_module('pictomood.conf.' + args['model']).trainer
 
     enna = Pictomood(
         trainer=trainer,

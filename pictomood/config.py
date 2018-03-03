@@ -86,6 +86,20 @@ def path_as(blobs):
 
     return path
 
+def name_generator(model, suffix):
+    m = model
+    return '_'.join([
+            m['name'],
+            m['validator'],
+            m['emotions'],
+            suffix,
+        ]
+    ) + m['ext']
+
+def dir_generator(model):
+    m = model
+    return m['validator'] + '_' + model['emotions']
+
 
 annotator_params = {
     'model': 'ssd_mobilenet_v1_coco_11_06_2017',

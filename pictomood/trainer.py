@@ -93,7 +93,7 @@ if __name__ == '__main__':
     # elif args.model == 'oea_less':
     #     trainer = config.trainer_oea_less
 
-    trainer = importlib.import_module('pictomood.conf.config_' + args_.model).trainer
+    trainer = importlib.import_module('pictomood.conf.' + args_.model).trainer
 
     train_emotion(
         trainer_=trainer,
