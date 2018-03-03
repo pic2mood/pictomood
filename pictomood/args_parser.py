@@ -20,7 +20,7 @@ class ArgsParser:
                 'arg': '--model',
                 'action': 'store',
                 'dest': 'model',
-                'default': 'oea_all',
+                'default': 'oea_confusion_matrix_all',
                 'help': 'Models are available in /conf. ' +
                         'Argument is the config filename suffix. ' +
                         '(e.g. --model oea_all # for config_oea_all config file).'
