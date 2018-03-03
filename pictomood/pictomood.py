@@ -15,6 +15,7 @@ from pictomood import args_parser
 import multiprocessing as mp
 import argparse
 import importlib
+from PIL import Image
 
 
 class Pictomood:
@@ -26,7 +27,8 @@ class Pictomood:
             batch=False,
             montage=False,
             single_path='',
-            score=False
+            score=False,
+            extract_to=''
     ):
         self.trainer = trainer
         self.mlp = MLP()
@@ -44,6 +46,7 @@ class Pictomood:
             self.single_path = single_path
 
         self.score = score
+        self.extract_to = extract_to
 
     def run(self, img, img_path):
 
@@ -117,7 +120,7 @@ class Pictomood:
                     input_.append(features)
                     output.append(config.emotions_map[emotion_str])
 
-                if self.montage:
+                if self.montage or self.extract_to:
                     # embed the predicted result
                     img = copyMakeBorder(
                         img,
@@ -167,7 +170,37 @@ class Pictomood:
                         color=(0, 255, 0)
                     )
 
-                    to_montage.append(img)
+                    # to_montage.append(img)
+
+                    if self.extract_to:
+
+                        # get emotion folder and filename
+                        extract_file = os.path.join(
+                            *img_path.split('/')[-2:]
+                        )
+
+                        # append extract path to it
+                        extract_file = os.path.join(
+                            self.extract_to,
+                            extract_file
+                        )
+
+                        print('Extract to:', extract_file)
+
+                        extract_dir = '/' + os.path.join(
+                            *extract_file.split('/')[:-1]
+                        )
+
+                        print(extract_dir)
+
+                        if not os.path.exists(extract_dir):
+                            os.makedirs(extract_dir)
+                        
+                        # extract the image to the generated file
+                        Image.fromarray(img).save(extract_file)
+
+                    elif self.montage:
+                        to_montage.append(img)
 
         if self.montage:
             montage_ = montage(to_montage)
@@ -291,7 +324,8 @@ def main(args_=None):
                 'model',
                 'parallel',
                 'batch',
-                'montage'
+                'montage',
+                'extract_to'
             ]
         ).parse_args()
 
@@ -301,7 +335,8 @@ def main(args_=None):
             'model': 'oea_all',
             'parallel': False,
             'batch': False,
-            'montage': False
+            'montage': False,
+            'extract_to': ''
         }
 
         args['model'] = args_.model
@@ -309,7 +344,8 @@ def main(args_=None):
         args['batch'] = args_.batch
         args['montage'] = args_.montage
         args['single_path'] = args_.single_path
-        args['score'] = args_.score
+        args['score'] = args_.score,
+        args['extract_to'] = args_.extract_to
 
     else:
         args = args_
@@ -328,7 +364,8 @@ def main(args_=None):
         batch=args['batch'],
         montage=args['montage'],
         single_path=args['single_path'],
-        score=args['score']
+        score=args['score'],
+        extract_to=args['extract_to']
     )
 
     if args['batch']:

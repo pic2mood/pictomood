@@ -79,6 +79,14 @@ class ArgsParser:
                 'dest': 'score',
                 'default': False,
                 'help': 'Add model accuracy score to output.'
+            },
+
+            'extract_to': {
+                'arg': '--extract_to',
+                'action': 'store',
+                'dest': 'extract_to',
+                'default': '',
+                'help': 'Extract each tagged image.'
             }
         }
 
