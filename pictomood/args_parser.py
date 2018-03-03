@@ -81,14 +81,11 @@ class ArgsParser:
                 'help': 'Add model accuracy score to output.'
             },
 
-            'extract': {
+            'extract_to': {
                 'arg': '--extract_to',
                 'action': 'store',
                 'dest': 'extract_to',
-                'default': os.path.join(
-                    os.getcwd(),
-                    'outputs'
-                ),
+                'default': '',
                 'help': 'Extract each tagged image.'
             }
         }
