@@ -340,4 +340,5 @@ def main(args_=None):
 
 
 if __name__ == '__main__':
-    main()
+    result = main()
+    print('RESULT:', result)
