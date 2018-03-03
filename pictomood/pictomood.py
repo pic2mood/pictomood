@@ -102,8 +102,8 @@ class Pictomood:
         for emotion_str, emotion_val in emotions.items():
 
             dir_images = os.path.join(
-                # self.trainer['raw_images_testset'],
-                importlib.import_module('pictomood.conf.oea_confusion_matrix_all').trainer['raw_images_testset'],
+                self.trainer['raw_images_testset'],
+                # importlib.import_module('pictomood.conf.oea_confusion_matrix_all').trainer['raw_images_testset'],
                 emotion_str
             )
 
