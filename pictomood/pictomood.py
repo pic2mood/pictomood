@@ -107,6 +107,8 @@ class Pictomood:
                 emotion_str
             )
 
+            csv_data = []
+
             for i, (img, img_path) in enumerate(
                 image_batch_loader(dir_=dir_images, limit=None)
             ):
@@ -116,6 +118,8 @@ class Pictomood:
 
                 print('Result:', config.emotions_list[result[0]])
                 print('Expected:', emotion_str)
+
+                # csv_data.append([img_path, config.emotions_list[result[0]]])
 
                 if self.score:
                     input_.append(features)
@@ -213,6 +217,9 @@ class Pictomood:
 
         if self.score:
             print('Score:', self.mlp.model.score(input_, output))
+
+        # csv_df = pd.DataFrame(csv_data, columns=['Image Dir', 'System EE'])
+        # csv_df.to_csv('test-retest.csv')
 
         return output
 
