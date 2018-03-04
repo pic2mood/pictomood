@@ -28,7 +28,8 @@ class Pictomood:
             montage=False,
             single_path='',
             score=False,
-            extract_to=''
+            extract_to='',
+            out_to_csv='',
     ):
         self.trainer = trainer
         self.mlp = MLP()
@@ -47,6 +48,7 @@ class Pictomood:
 
         self.score = score
         self.extract_to = extract_to
+        self.out_to_csv = out_to_csv
 
     def run(self, img, img_path):
 
@@ -99,6 +101,10 @@ class Pictomood:
 
         input_ = []
         output = []
+
+        if self.out_to_csv:
+            csv_data = []
+
         for emotion_str, emotion_val in emotions.items():
 
             dir_images = os.path.join(
@@ -106,8 +112,6 @@ class Pictomood:
                 # importlib.import_module('pictomood.conf.oea_confusion_matrix_all').trainer['raw_images_testset'],
                 emotion_str
             )
-
-            csv_data = []
 
             for i, (img, img_path) in enumerate(
                 image_batch_loader(dir_=dir_images, limit=None)
@@ -119,7 +123,8 @@ class Pictomood:
                 print('Result:', config.emotions_list[result[0]])
                 print('Expected:', emotion_str)
 
-                # csv_data.append([img_path, config.emotions_list[result[0]]])
+                if self.out_to_csv:
+                    csv_data.append([img_path, config.emotions_list[result[0]]])
 
                 if self.score:
                     input_.append(features)
@@ -218,8 +223,9 @@ class Pictomood:
         if self.score:
             print('Score:', self.mlp.model.score(input_, output))
 
-        # csv_df = pd.DataFrame(csv_data, columns=['Image Dir', 'System EE'])
-        # csv_df.to_csv('test-retest.csv')
+        if self.out_to_csv:
+            csv_df = pd.DataFrame(csv_data, columns=['Image Dir', 'System EE'])
+            csv_df.to_csv(self.out_to_csv)
 
         return output
 
@@ -333,7 +339,8 @@ def main(args_=None):
                 'parallel',
                 'batch',
                 'montage',
-                'extract_to'
+                'extract_to',
+                'out_to_csv'
             ]
         ).parse_args()
 
@@ -344,7 +351,8 @@ def main(args_=None):
             'parallel': False,
             'batch': False,
             'montage': False,
-            'extract_to': ''
+            'extract_to': '',
+            'out_to_csv': ''
         }
 
         args['model'] = args_.model
@@ -354,6 +362,7 @@ def main(args_=None):
         args['single_path'] = args_.single_path
         args['score'] = args_.score,
         args['extract_to'] = args_.extract_to
+        args['out_to_csv'] = args_.out_to_csv
 
     else:
         args = args_
@@ -373,7 +382,8 @@ def main(args_=None):
         montage=args['montage'],
         single_path=args['single_path'],
         score=args['score'],
-        extract_to=args['extract_to']
+        extract_to=args['extract_to'],
+        out_to_csv=args['out_to_csv']
     )
 
     if args['batch']:

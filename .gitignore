@@ -8,3 +8,4 @@ training_p2m/
 requirements/
 outputs/
 outputs.zip
+*.csv

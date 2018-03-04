@@ -87,6 +87,14 @@ class ArgsParser:
                 'dest': 'extract_to',
                 'default': '',
                 'help': 'Extract each tagged image.'
+            },
+
+            'out_to_csv': {
+                'arg': '--out_to_csv',
+                'action': 'store',
+                'dest': 'out_to_csv',
+                'default': '',
+                'help': 'Extract an output csv file.'
             }
         }
 
